@@ -42,7 +42,8 @@ $.getJSON("waBridgesPrj.geojson",
 			var marker = new L.CircleMarker(latlng,{
 					color:[feature.properties.InitialDam],
 					fillColor: colors[feature.properties.InitialDam],
-					radius: 4,					fillOpacity: 1
+					radius: 4,					
+					fillOpacity: 1
 			});
 			marker.bindPopup("Year Built: " + feature.properties.YearBuilt + "<br>Days to Replace: "+ feature.properties.RepairTime);
 			return marker;
