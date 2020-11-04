@@ -1,0 +1,61 @@
+<html>
+<head>
+	<title>Bridge Damage</title>
+ 	<!-- the Leaflet CSS -->
+ 	<link rel="stylesheet" type="text/css" href="mystyle.css"></link>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
+	<!-- the Leaflet JavaScript library -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+			integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+			crossorigin="anonymous">
+			</script>
+
+ <script src="https://kit.fontawesome.com/04c9365ff0.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <h1>How an earthquake could disrupt Puget Sound supply chain</h1>	<!-- code where we create and name the container that holds the map -->
+	<div id="map" style="height: 80%"></div>
+  	<!-- code where we build the map and its functionality -->
+<script>
+		var mymap = L.map('map').setView([47.219, -122.423], 11);
+		var basemap =  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+}).addTo(mymap);
+
+$.getJSON("waBridgesPrj.geojson",
+ function(data) {
+	L.geoJson(data,{
+		pointToLayer: function(feature, latlng) {
+			var colors = {
+				"Significant Damage": "red",
+				"Moderate Damage": "yellow",
+				"Minor Damage" : "green"
+			};
+			var marker = new L.CircleMarker(latlng,{
+					color:[feature.properties.InitialDam],
+					fillColor: colors[feature.properties.InitialDam],
+					radius: 4,					fillOpacity: 1
+			});
+			marker.bindPopup("Year Built: " + feature.properties.YearBuilt + "<br>Days to Replace: "+ feature.properties.RepairTime);
+			return marker;
+				}
+			}).addTo(mymap);
+		});
+
+$.getJSON("WSDOT_-_Seismic_Lifelines.geojson",
+ 	function(data){
+ 	L.geoJson(data).addTo(mymap);
+});
+</script>
+<p>These points indicate where how bridges around the Puget Sound Region will be able to handle the impacts of an earthquake. The assessment given by Washington's Department of Transportation (WSDOT) identifies "significant", "moderate", and "minor" damages as well as the number of days it would take to repair the damages. Red markers show the significant damage while yellow indicates moderate damages. The "seismic lifeline" of this area is the infrastructure required to get supplies and other support to the area in the case of some emergency. In the event of an earthquake, these bridges may fail and alter routes needed for immediate response to that disaster. Clicking on the points show the year the bridge was built, as well as the estimated time to repair the structure.</p>
+
+</body>
+</html>
