@@ -2,8 +2,8 @@
 <head>
 	<title>Bridge Damage</title>
  	<!-- the Leaflet CSS -->
- 	<link rel="stylesheet" type="text/css" href="mystyle.css"></link>
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+<link rel="stylesheet" type="text/css" href="mystyle.css"></link>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
   crossorigin=""/>
 	<!-- the Leaflet JavaScript library -->
@@ -12,17 +12,41 @@
   crossorigin=""></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
-			integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
-			crossorigin="anonymous">
-			</script>
+	integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+	crossorigin="anonymous"></script>
+<script src= "https://cdn.jsdelivr.net/npm/leaflet-legend@1.0.2/leaflet-legend.min.js"></script>
 
- <script src="https://kit.fontawesome.com/04c9365ff0.js" crossorigin="anonymous"></script>
 
 </head>
 
 <body>
   <h1>How an earthquake could disrupt Puget Sound supply chain</h1>	<!-- code where we create and name the container that holds the map -->
-	<div id="map" style="height: 80%"></div>
+	<div id="map" style="height: 80%">
+	<div id="legend">
+			<h3><center>Level of Damage</center></h3>
+			<ul style="list-style-type:none">
+				<li>
+					<svg width="24" height="24">
+						<circle cx="12" cy="18" r="4" stroke="green" stroke-width="3" fill="green" fill-opacity="1"/>
+					</svg>
+					<text>Minor Damage</text>
+				</li>
+				<li>
+					<svg width="24" height="24">
+						<circle cx="12" cy="18" r="4" stroke="yellow" stroke-width="3" fill="yellow" fill-opacity="1"/>
+					</svg>
+					<text>Moderate Damage</text>
+				</li>
+				<li>
+					<svg width="24" height="24">
+						<circle cx="12" cy="18" r="4" stroke="red" stroke-width="3" fill="red" fill-opacity="1"/>
+					</svg>
+					<text>Signifiacant Damage</text>
+				</li>
+			</ul>
+		</div>
+	</div>
+
   	<!-- code where we build the map and its functionality -->
 <script>
 		var mymap = L.map('map').setView([47.219, -122.423], 11);
@@ -33,27 +57,36 @@
 $.getJSON("waBridgesPrj.geojson",
  function(data) {
 	L.geoJson(data,{
+
 		pointToLayer: function(feature, latlng) {
 			var colors = {
 				"Significant Damage": "red",
 				"Moderate Damage": "yellow",
 				"Minor Damage" : "green"
 			};
-			var marker = new L.CircleMarker(latlng,{
+
+			var marker = new L.CircleMarker(latlng, {
 					color:[feature.properties.InitialDam],
 					fillColor: colors[feature.properties.InitialDam],
-					radius: 4,					
+					radius: 4,
 					fillOpacity: 1
 			});
+
 			marker.bindPopup("Year Built: " + feature.properties.YearBuilt + "<br>Days to Replace: "+ feature.properties.RepairTime);
 			return marker;
 				}
 			}).addTo(mymap);
-		});
+});
 
 $.getJSON("WSDOT_-_Seismic_Lifelines.geojson",
  	function(data){
  	L.geoJson(data).addTo(mymap);
+	var Legend =  new L.Control.Legend({
+		position: 'bottomright',
+	});
+
+	mymap.addControl(Legend);
+	$(".legend-container").append( $("#legend") );
 });
 </script>
 <p>These points indicate where how bridges around the Puget Sound Region will be able to handle the impacts of an earthquake. The assessment given by Washington's Department of Transportation (WSDOT) identifies "significant", "moderate", and "minor" damages as well as the number of days it would take to repair the damages. Red markers show the significant damage while yellow indicates moderate damages. The "seismic lifeline" of this area is the infrastructure required to get supplies and other support to the area in the case of some emergency. In the event of an earthquake, these bridges may fail and alter routes needed for immediate response to that disaster. Clicking on the points show the year the bridge was built, as well as the estimated time to repair the structure.</p>
