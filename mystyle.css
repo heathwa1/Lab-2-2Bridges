@@ -1,0 +1,16 @@
+.CircleMarker {
+  border-radius: 50%;
+  box-shadow: 3px 3px 3px grey;
+  -moz-box-shadow: 4px 4px 3px grey;
+-webkit-box-shadow: 4px 4px 3px grey;
+}
+body {
+  font-family: 'tahoma' sans-serif;
+  max-width: 900px;
+  margin: auto;
+}
+h1 {
+  text-align: center;
+  font-size: 40px;
+  padding: 20px;
+}
