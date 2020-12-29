@@ -51,31 +51,42 @@
 <script>
 		var mymap = L.map('map').setView([47.219, -122.423], 11);
 		var basemap =  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), WSDOT, and the GIS User Community'
 }).addTo(mymap);
 
 $.getJSON("waBridgesPrj.geojson",
  function(data) {
-	L.geoJson(data,{
+	 		L.geoJson(data, {
+					pointToLayer: function (feature, latlng){
+						var colors = {
+							"Significant Damage": "red",
+							"Moderate Damage": "yellow",
+							"Minor Damage" : "green"
+							};
+						var marker = new L.CircleMarker(latlng, {
+								color:"black",
+								weight: 0.5,
+								fillColor: colors[feature.properties.InitialDam],
+								radius: 3,
+								fillOpacity: 1
+							});
 
-		pointToLayer: function(feature, latlng) {
-			var colors = {
-				"Significant Damage": "red",
-				"Moderate Damage": "yellow",
-				"Minor Damage" : "green"
-			};
 
-			var marker = new L.CircleMarker(latlng, {
-					color:[feature.properties.InitialDam],
-					fillColor: colors[feature.properties.InitialDam],
-					radius: 4,
-					fillOpacity: 1
-			});
+			// var marker = new L.CircleMarker(latlng, {style: damage};
+				// 	color:[feature.properties.InitialDam],
+				// 	fillColor: colors[feature.properties.InitialDam],
+				// 	radius: 4,
+				// 	fillOpacity: 1
+				// }
+			// );
+			// }
 
-			marker.bindPopup("Year Built: " + feature.properties.YearBuilt + "<br>Days to Replace: "+ feature.properties.RepairTime);
+
+			marker.bindPopup("Year Built: " + feature.properties.InitialDam + "<br>Days to Replace: "+ feature.properties.RepairTime);
 			return marker;
-				}
-			}).addTo(mymap);
+		}
+
+	}).addTo(mymap);
 });
 
 $.getJSON("WSDOT_-_Seismic_Lifelines.geojson",
