@@ -6,10 +6,15 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
   crossorigin=""/>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel "stylesheet" src ="/BeautifyMarker/leaflet-beautify-marker-icon.css"/>
 	<!-- the Leaflet JavaScript library -->
+
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
   crossorigin=""></script>
+	<script href = "/BeautifyMarker/leaflet-beautify-marker-icon.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
 	integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
@@ -17,31 +22,45 @@
 <script src= "https://cdn.jsdelivr.net/npm/leaflet-legend@1.0.2/leaflet-legend.min.js"></script>
 
 
+
 </head>
 
 <body>
   <h1>How an earthquake could disrupt Puget Sound supply chain</h1>	<!-- code where we create and name the container that holds the map -->
+	<!-- <div class = "btn-group">
+		<button href = "#twoWks" type = "button" id = "twoWks">2 Weeks</button>
+		<button href = "#oneMo" type = "button" id = "oneMo">1 Month</button>
+		<button  href = "threeMos" type = "button" id = "threeMos">3 Months</button>
+		<button  href = "#sixMos" type = "button" id = "sixMos">6 Months</button>
+		<button href = "#sixMoPlus" type = "button" id = "sixMoPlus">Longer than 6 Months</button> -->
 	<div id="map" style="height: 80%">
 	<div id="legend">
 			<h3><center>Level of Damage</center></h3>
 			<ul style="list-style-type:none">
 				<li>
 					<svg width="24" height="24">
-						<circle cx="12" cy="18" r="4" stroke="green" stroke-width="3" fill="green" fill-opacity="1"/>
+						<circle cx="12" cy="18" r="4" stroke="black" stroke-width="0.5" fill="green" fill-opacity="1"/>
 					</svg>
 					<text>Minor Damage</text>
 				</li>
 				<li>
 					<svg width="24" height="24">
-						<circle cx="12" cy="18" r="4" stroke="yellow" stroke-width="3" fill="yellow" fill-opacity="1"/>
+						<circle cx="12" cy="18" r="4" stroke="black" stroke-width="0.5" fill="yellow" fill-opacity="1"/>
 					</svg>
 					<text>Moderate Damage</text>
 				</li>
 				<li>
 					<svg width="24" height="24">
-						<circle cx="12" cy="18" r="4" stroke="red" stroke-width="3" fill="red" fill-opacity="1"/>
+						<circle cx="12" cy="18" r="4" stroke="black" stroke-width="0.5" fill="red" fill-opacity="1"/>
 					</svg>
 					<text>Signifiacant Damage</text>
+				</li>
+				<li>
+					<svg width = "24" height = "24">
+						<line x1 ="0" y1 ="20" x2 ="22" y2 ="20"
+						style ="stroke: blue; stroke-width:3"/>
+					</svg>
+					<text>Seismic Lifeline</text>
 				</li>
 			</ul>
 		</div>
@@ -49,49 +68,62 @@
 
   	<!-- code where we build the map and its functionality -->
 <script>
+
 		var mymap = L.map('map').setView([47.219, -122.423], 11);
-		var basemap =  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), WSDOT, and the GIS User Community'
+		var basemap =  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012, WSDOT'
 }).addTo(mymap);
 
-$.getJSON("waBridgesPrj.geojson",
- function(data) {
-	 		L.geoJson(data, {
-					pointToLayer: function (feature, latlng){
-						var colors = {
-							"Significant Damage": "red",
-							"Moderate Damage": "yellow",
-							"Minor Damage" : "green"
-							};
-						var marker = new L.CircleMarker(latlng, {
-								color:"black",
-								weight: 0.5,
-								fillColor: colors[feature.properties.InitialDam],
-								radius: 3,
-								fillOpacity: 1
-							});
 
 
-			// var marker = new L.CircleMarker(latlng, {style: damage};
-				// 	color:[feature.properties.InitialDam],
-				// 	fillColor: colors[feature.properties.InitialDam],
-				// 	radius: 4,
-				// 	fillOpacity: 1
-				// }
-			// );
-			// }
 
-
-			marker.bindPopup("Year Built: " + feature.properties.InitialDam + "<br>Days to Replace: "+ feature.properties.RepairTime);
-			return marker;
-		}
-
-	}).addTo(mymap);
+var myIcon = L.divIcon ({
+	html: "<i class=fas fa-map-pin></i>",
+	iconSize: [20,20],
+	className: "repair"
 });
+
+
+  $.getJSON("waBridgesPrj.geojson",
+ 			function(data){
+		 		L.geoJson(data, {
+						pointToLayer: function(feature, latlng){
+							var colors = {
+								"Significant Damage": "red",
+								"Moderate Damage": "yellow",
+								"Minor Damage" : "green"
+								};
+
+						var marker = L.marker(latlng,
+							{icon: myIcon,
+
+
+									// color:"black",
+									// weight: 0.5,
+									fillColor: colors[feature.properties.InitialDam],
+									// radius: 3,
+									// fillOpacity: 1
+								});
+					//
+					//
+					// 	marker.bindPopup("Year Built: " + feature.properties.YearBuilt + "<br>Days to Replace: "+ feature.properties.RepairTime);
+					// 	return marker;
+				}
+			}).addTo(mymap);
+	});
+
+
+
 
 $.getJSON("WSDOT_-_Seismic_Lifelines.geojson",
  	function(data){
  	L.geoJson(data).addTo(mymap);
+
+
+// 	});
+// }).addTo(map);
+
+
 	var Legend =  new L.Control.Legend({
 		position: 'bottomright',
 	});
