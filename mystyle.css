@@ -1,8 +1,26 @@
-.CircleMarker {
+.sigCircle {
+  background: red;
+  background-image:radial-gradient(red, 75%,black);
   border-radius: 50%;
-  box-shadow: 3px 3px 3px grey;
-  -moz-box-shadow: 4px 4px 3px grey;
--webkit-box-shadow: 4px 4px 3px grey;
+  box-shadow: 2px 2px 3px grey;
+  -moz-box-shadow: 2px 2px 3px grey;
+  -webkit-box-shadow: 2px 2px 3px grey;
+}
+.modCircle {
+  background: yellow;
+  background-image:radial-gradient(yellow,75%,black);
+  border-radius: 50%;
+  box-shadow: 2px 2px 3px grey;
+  -moz-box-shadow: 2px 2px 3px grey;
+  -webkit-box-shadow: 2px 2px 3px grey;
+}
+.minCircle {
+  background: green;
+  background-image:radial-gradient(green,75%,black);
+  border-radius: 50%;
+  box-shadow: 2px 2px 3px  grey;
+  -moz-box-shadow: 2px 2px 3px  grey;
+  -webkit-box-shadow: 2px 2px 3px  grey;
 }
 body {
   font-family: 'tahoma' sans-serif;
@@ -18,5 +36,14 @@ h1 {
 		line-height: 0px;
 		background: white;
 		opacity: 0.8;
-		padding:5px 25px 5px 0px;
+		padding:10px 20px 15px 20px;
 	}
+button {
+    width: 100px;
+    height: 50px;
+}
+.myDivIcon {
+  text-align: center;
+  border-width: thin;
+  border-color: black;
+}
