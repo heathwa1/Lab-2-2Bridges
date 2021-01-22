@@ -98,16 +98,7 @@
 
 
 
-//
-// const fontAwesomeIcon = L.divIcon ({
-// 	iconSize: [20,20],
-// 	html:"<i class=fas fa-map-pin fa-4x></i>",
-// 	className: "myDivIcon"
-// });
-// var myIcon2 = L.AwesomeMarkers.icon ({
-// 	markerColor: "orange",
-// 	icon: "map-pin"
-// });
+
 
 var div_sigCircle = L.divIcon({className: "sigCircle"});
 var div_modCircle = L.divIcon({className: "modCircle"});
@@ -150,6 +141,7 @@ var div_minCircle = L.divIcon({className: "minCircle"});
 									this.bindPopup(feature.properties.RepairTime).openPopup();
 								});
 							}
+
 						});
 						sigDamage.addTo(mymap)
 						modDamage.addTo(mymap)
