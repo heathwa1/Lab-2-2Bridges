@@ -14,22 +14,22 @@ attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Int
 var allbridges = L.layerGroup();
   $.getJSON("waBridgesPrj.geojson",
 	function(data){
-	// var allbridges = L.geoJson(data)
+	// filter points by properties
 	var sigDamage = L.geoJson(data, {
 		filter: function(feature,layer) {
 			return feature.properties.InitialDam === "Significant Damage";
 		},
-
+	//create points by latlng and filtered property
 		pointToLayer: function(feature, latlng) {
 			var div_sigCircle = L.divIcon({
 			  className: "sigCircle",
 			  interactive: true
 			});
-
+	//return points as custom divIcon--css styled
 			return L.marker(latlng, {
 				icon: div_sigCircle});
 		},
-
+	//popup info for points
             	onEachFeature: function(feature, layer){
                 layer.bindPopup("<b>Days to repair:</b></br> "+feature.properties.RepairTime);
               	}
