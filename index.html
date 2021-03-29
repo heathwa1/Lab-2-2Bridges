@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
   crossorigin=""/>
-<link rel="stylesheet" href="/css/fontawesome.css"/>
+<link rel="stylesheet" href="css/fontawesome.css"/>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
@@ -30,6 +30,7 @@
 </head>
 
 <body>
+
   <h1>How an earthquake could disrupt Puget Sound supply chain</h1>	<!-- code where we create and name the container that holds the map -->
 	<!-- <div class = "btn-group">
 		<button  type = "button" id = "twoWks" class= "btn btn-primary">2 Weeks</button>
@@ -88,124 +89,10 @@
 		</div>
 	</div>
 
-  	<!-- code where we build the map and its functionality -->
-<script>
 
-		var mymap = L.map('map').setView([47.219, -122.423], 11);
-		var basemap =  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
-	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012, WSDOT'
-}).addTo(mymap);
-
-
-
-
-
-var div_sigCircle = L.divIcon({className: "sigCircle"});
-var div_modCircle = L.divIcon({className: "modCircle"});
-var div_minCircle = L.divIcon({className: "minCircle"});
-  $.getJSON("waBridgesPrj.geojson",
- 			function(data){
-		 	var allbridges = L.geoJson(data)
-						var sigDamage = L.geoJson(data, {
-							filter: function(feature,layer) {
-								return feature.properties.InitialDam === "Significant Damage";
-							},
-							pointToLayer: function(feature, latlng) {
-								return L.marker(latlng, {
-									icon: div_sigCircle
-								}).on("click", function(){
-									this.bindPopup(feature.properties.RepairTime).openPopup();
-								});
-							}
-						});
-						var modDamage = L.geoJson(data, {
-							filter: function(feature, layer) {
-								return feature.properties.InitialDam === "Moderate Damage";
-							},
-							pointToLayer: function(feature, latlng) {
-								return L.marker(latlng, {
-									icon: div_modCircle
-								}).on("click", function() {
-									this.bindPopup(feature.properties.RepairTime).openPopup();
-								});
-							}
-						});
-						var minDamage = L.geoJson(data, {
-							filter: function(feature, layer) {
-								return feature.properties.InitialDam === "Minor Damage";
-							},
-							pointToLayer: function(feature, latlng) {
-								return L.marker(latlng, {
-									icon: div_minCircle
-								}).on("click", function() {
-									this.bindPopup(feature.properties.RepairTime).openPopup();
-								});
-							}
-
-						});
-						sigDamage.addTo(mymap)
-						modDamage.addTo(mymap)
-						minDamage.addTo(mymap)
-
-						$("#sixMoPlus").click(function() {
-							mymap.addLayer(sixMoPlus)
-							mymap.removeLayer(sixMos)
-						});
-						$("#sixMos").click(function() {
-							mymap.addLayer(sixMos)
-							mymap.removeLayer(sixMoPlus)
-						});
-						$("#allbridges").click(function() {
-							mymap.addLayer(sixMoPlus)
-							mymap.addLayer(sixMos)
-						});
-
-						// function(feature, latlng){
-							// var colors = {
-							// 	"Significant Damage": "red",
-							// 	"Moderate Damage": "yellow",
-							// 	"Minor Damage" : "green"
-							// 	};
-
-						// var marker = L.marker(latlng,
-						// 	{icon: myIcon
-
-
-									// color:"black",
-									// weight: 0.5,
-									// fillColor: colors[feature.properties.InitialDam],
-									// radius: 3,
-									// fillOpacity: 1
-								});
-					//
-					//
-					// 	marker.bindPopup("Year Built: " + feature.properties.YearBuilt + "<br>Days to Replace: "+ feature.properties.RepairTime);
-					// 	return marker;
-	// 			}
-	// 		}).addTo(mymap);
-	// });
-
-
-
-
-$.getJSON("WSDOT_-_Seismic_Lifelines.geojson",
- 	function(data){
- 	L.geoJson(data).addTo(mymap);
-
-
-// 	});
-// }).addTo(map);
-
-
-	var Legend =  new L.Control.Legend({
-		position: 'bottomright',
-	});
-
-	mymap.addControl(Legend);
-	$(".legend-container").append( $("#legend") );
-});
-</script>
 <p>These points indicate where how bridges around the Puget Sound Region will be able to handle the impacts of an earthquake. The assessment given by Washington's Department of Transportation (WSDOT) identifies "significant", "moderate", and "minor" damages as well as the number of days it would take to repair the damages. Red markers show the significant damage while yellow indicates moderate damages. The "seismic lifeline" of this area is the infrastructure required to get supplies and other support to the area in the case of some emergency. In the event of an earthquake, these bridges may fail and alter routes needed for immediate response to that disaster. Clicking on the points show the year the bridge was built, as well as the estimated time to repair the structure.</p>
+
+<script src = "javascript.js"></script>
 
 </body>
 </html>
