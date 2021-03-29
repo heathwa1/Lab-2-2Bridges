@@ -2,6 +2,8 @@
   background: red;
   background-image:radial-gradient(red, 75%,black);
   border-radius: 50%;
+  height: 10px;
+  width: 10px;
   box-shadow: 2px 2px 3px grey;
   -moz-box-shadow: 2px 2px 3px grey;
   -webkit-box-shadow: 2px 2px 3px grey;
@@ -22,15 +24,23 @@
   -moz-box-shadow: 2px 2px 3px  grey;
   -webkit-box-shadow: 2px 2px 3px  grey;
 }
+divIcon {
+  height: 2em;
+  width: 2em;
+}
+
 body {
   font-family: 'tahoma' sans-serif;
   max-width: 900px;
-  margin: auto;
+  margin:auto;
 }
 h1 {
   text-align: center;
   font-size: 40px;
   padding: 20px;
+}
+map {
+  margin:auto;
 }
 #legend {
 		line-height: 0px;
