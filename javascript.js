@@ -13,102 +13,75 @@ attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Int
 
 var allbridges = L.layerGroup();
   $.getJSON("waBridgesPrj.geojson",
- 			function(data){
-		 	// var allbridges = L.geoJson(data)
-					var sigDamage = L.geoJson(data, {
-							filter: function(feature,layer) {
-								return feature.properties.InitialDam === "Significant Damage";
-							},
+	function(data){
+	// var allbridges = L.geoJson(data)
+	var sigDamage = L.geoJson(data, {
+		filter: function(feature,layer) {
+			return feature.properties.InitialDam === "Significant Damage";
+		},
 
-							pointToLayer: function(feature, latlng) {
-                var div_sigCircle = L.divIcon({
-                  className: "sigCircle",
-                  interactive: true
-                });
+		pointToLayer: function(feature, latlng) {
+			var div_sigCircle = L.divIcon({
+			  className: "sigCircle",
+			  interactive: true
+			});
 
-								return L.marker(latlng, {
-									icon: div_sigCircle});
-							},
+			return L.marker(latlng, {
+				icon: div_sigCircle});
+		},
+
+            	onEachFeature: function(feature, layer){
+                layer.bindPopup("<b>Days to repair:</b></br> "+feature.properties.RepairTime);
+              	}
+
+         }).addTo(allbridges);
+
+	var modDamage = L.geoJson(data, {
+		filter: function(feature, layer) {
+			return feature.properties.InitialDam === "Moderate Damage";
+		},
+
+		pointToLayer: function(feature, latlng) {
+			var div_modCircle = L.divIcon({
+			  className: "modCircle",
+			  interactive: true
+               	 	});
+
+			return L.marker(latlng, {
+				icon: div_modCircle});
+		},
 
               onEachFeature: function(feature, layer){
-                layer.bindPopup("<b>Days to repair:</b></br> "+feature.properties.RepairTime);
-              }
-
-          }).addTo(allbridges);
-
-					var modDamage = L.geoJson(data, {
-							filter: function(feature, layer) {
-								return feature.properties.InitialDam === "Moderate Damage";
-							},
-
-							pointToLayer: function(feature, latlng) {
-                var div_modCircle = L.divIcon({
-                  className: "modCircle",
-                  interactive: true
-                });
-
-								return L.marker(latlng, {
-									icon: div_modCircle});
-							},
-
-              onEachFeature: function(feature, layer){
-                layer.bindPopup("<b>Days to repair:</b></br> "+feature.properties.RepairTime);
+              layer.bindPopup("<b>Days to repair:</b></br> "+feature.properties.RepairTime);
               }
 
           }).addTo(allbridges);
 
           var minDamage = L.geoJson(data, {
-              filter: function(feature, layer) {
-                return feature.properties.InitialDam === "Minor Damage";
-              },
+	         filter: function(feature, layer) {
+			 return feature.properties.InitialDam === "Minor Damage";
+	      },
 
-              pointToLayer: function(feature, latlng) {
-                var div_minCircle = L.divIcon({
-                  className: "minCircle",
-                  interactive: true
-                });
+                 pointToLayer: function(feature, latlng) {
+			var div_minCircle = L.divIcon({
+			  className: "minCircle",
+			  interactive: true
+			});
 
-                return L.marker(latlng, {
-                  icon: div_minCircle});
+			return L.marker(latlng, {
+			        icon: div_minCircle});
                 },
 
                 onEachFeature: function(feature, layer){
-                  layer.bindPopup("<b>Days to repair:</b></br> "+feature.properties.RepairTime);
+                layer.bindPopup("<b>Days to repair:</b></br> "+feature.properties.RepairTime);
                 }
 
           }).addTo(allbridges);
           mymap.addLayer(allbridges);
 
+ });
 
 
-            // sigDamage.addTo(mymap)
-            // modDamage.addTo(mymap)
-            // minDamage.addTo(mymap)
-
-
-            //
-            // $("#sixMoPlus").click(function() {
-            //   mymap.addLayer(sixMoPlus)
-            //   mymap.removeLayer(sixMos)
-            // });
-            // $("#sixMos").click(function() {
-            //   mymap.addLayer(sixMos)
-            //   mymap.removeLayer(sixMoPlus)
-            // });
-            // $("#allbridges").click(function() {
-            //   mymap.addLayer(sixMoPlus)
-            //   mymap.addLayer(sixMos)
-            // });
-
-
-				});
-
-
-			// 			L.marker.bindPopup("Year Built: " + feature.properties.YearBuilt + "<br>Days to Replace: "+ feature.properties.RepairTime);
-			// 			return L.marker;
-      //
-			// }).addTo(mymap);
-	// });
 
 
 
@@ -117,9 +90,6 @@ $.getJSON("WSDOT_-_Seismic_Lifelines.geojson",
  	function(data){
  	L.geoJson(data).addTo(mymap);
 
-
-// 	});
-// }).addTo(map);
 
 var Legend =  new L.Control.Legend({
   position: 'bottomright',
