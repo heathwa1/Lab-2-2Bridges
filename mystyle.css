@@ -31,17 +31,15 @@ divIcon {
 
 body {
   font-family: 'tahoma' sans-serif;
-  max-width: 900px;
-  margin:auto;
+  max-width:900px;
+  margin: auto;
 }
 h1 {
   text-align: center;
   font-size: 40px;
   padding: 20px;
 }
-map {
-  margin:auto;
-}
+
 #legend {
 		line-height: 0px;
 		background: white;

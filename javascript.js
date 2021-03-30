@@ -1,7 +1,7 @@
 <!-- code where we build the map and its functionality -->
 
 
-var mymap = L.map('map', {
+  var mymap = L.map('map', {
   center:[47.219, -122.423],
   zoom:11,
 
@@ -80,10 +80,6 @@ var allbridges = L.layerGroup();
           mymap.addLayer(allbridges);
 
  });
-
-
-
-
 
 
 $.getJSON("WSDOT_-_Seismic_Lifelines.geojson",
