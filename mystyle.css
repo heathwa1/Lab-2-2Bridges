@@ -1,3 +1,9 @@
+body {
+  font-family: sans-serif;
+  max-width: 900px;
+  margin: auto;
+}
+
 .sigCircle {
   background: red;
   background-image:radial-gradient(red, 75%,black);
@@ -24,16 +30,7 @@
   -moz-box-shadow: 2px 2px 3px  grey;
   -webkit-box-shadow: 2px 2px 3px  grey;
 }
-divIcon {
-  height: 2em;
-  width: 2em;
-}
 
-body {
-  font-family: 'tahoma' sans-serif;
-  max-width:900px;
-  margin: auto;
-}
 h1 {
   text-align: center;
   font-size: 40px;
@@ -43,16 +40,15 @@ h1 {
 #legend {
 		line-height: 0px;
 		background: white;
-    position: absolute;
 		opacity: 0.8;
 		padding:10px 20px 15px 20px;
 	}
-button {
+/* button {
     width: 100px;
     height: 50px;
-}
+} */
 .myDivIcon {
-  text-align: center;
+  /* text-align: center; */
   border-width: thin;
   border-color: black;
 }
